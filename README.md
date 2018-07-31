@@ -42,6 +42,13 @@ With Maven:
 
 Please open issues against the [official clj-time repo on Github](https://github.com/clj-time/clj-time/issues). `clj-time` is a very thin wrapper around Joda Time. That means that if Joda Time has a "peculiar behavior", it's likely to be surfaced directly in `clj-time` as well. A good example of this is `clj-time.format/unparse` which simply calls Joda Time's `.print` method -- and if the date passed in happens to be `nil`, you silently get back the _current date/time_ (many people would expect an exception!).
 
+Note: It is good practice to set your database timezone to `UTC`. Some of the core functions (such as `clj-time.core/epoch`) return DateTime objects in `UTC`. Keeping everything set to UTC consistently will cut down on difficult-to-debug timezone discrepancies.
+
+Likewise, it is also highly recommended that you make sure your JVM System time is set to `UTC` if your dev environment is not already. This can be done in Leiningen by adding to your `project.clj`:
+```clojure
+:jvm-opts ["-Duser.timezone=UTC"]
+```
+
 ## Mailing List
 
 Please ask questions on the [clj-time mailing list](http://groups.google.com/forum/#!forum/clj-time).
